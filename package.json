@@ -4,7 +4,8 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "start": "node src/server.js", 
+    "dev": "nodemon src/server.js"
   },
   "repository": {
     "type": "git",
@@ -15,5 +16,11 @@
   "bugs": {
     "url": "https://github.com/GouravSingal-code/kissan_mandi_price/issues"
   },
-  "homepage": "https://github.com/GouravSingal-code/kissan_mandi_price#readme"
+  "homepage": "https://github.com/GouravSingal-code/kissan_mandi_price#readme",
+  "dependencies": {
+    "body-parser": "^1.19.0",
+    "dotenv": "^10.0.0",
+    "ejs": "^3.1.6",
+    "express": "^4.17.1"
+  }
 }
