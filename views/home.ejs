@@ -1,3 +1,7 @@
 <% -include('partials/header.ejs')%>
 <h1>Hello from home.ejs</h1>
+<script type="text/javascript" charset="utf-8">
+    let data = <%- JSON.stringify(data)%>
+    console.log(data)
+</script>
 <% -include('partials/footer.ejs')%>
