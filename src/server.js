@@ -39,12 +39,13 @@ app.get('/', async(req, res)=>{
                 costArray.push(commodities[index].modal_price)
                 costArray.push(commodities[index].max_price)
             }
+            
         }
-        console.log(states)
+        res.render('home', {data: commodities})
+        // console.log(states)
     })
     // async/await is required here line 38 is running before line 35
-    console.log("sending the response")
-    res.render('home', {data: states})
+    // console.log("sending the response")
 })
 
 app.listen(process.env.PORT, ()=>{
