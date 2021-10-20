@@ -1,6 +1,49 @@
 <%- include('partials/header') %>
-<div class="container mt-3">
-    <h1>Hello from home.ejs</h1>
+<div class="container-fluid heaader">
+    <h1 style="text-align: center;">MANDI PRICES</h1>
+    <hr>
+</div>
+<div class="flexbox">
+  <form class="ml-5 m-3 mr-4 form">
+    <div class="mb-3">
+      <label for="state" class="form-label">State:</label>
+      <input type="text" class="form-control" id="state"> 
+    </div>
+
+    <div class="mb-3">
+      <label for="district" class="form-label">District:</label>
+      <input type="text" class="form-control" id="district">
+    </div>
+
+    <div class="mb-3">
+      <label for="pincode" class="form-label">Pincode:</label>
+      <input type="text" class="form-control" id="pincode">
+    </div>
+
+    <div class="mb-3">
+      <label for="commodity" class="form-label">Commodity:</label>
+      <input type="text" class="form-control" id="commodity">
+    </div>
+
+    <div class="mb-3">
+      <input type="submit" class="submit" id="sumbit">
+    </div>
+  </form>
+
+  <table class="table table-bordered mr-5 ml-3">
+    <thead>
+      <tr>
+        <th scope="col">APMC</th>
+        <th scope="col">Commodity</th>
+        <th scope="col">Min Price</th>
+        <th scope="col">Max price</th>
+        <th scope="col">Modal price</th>
+      </tr> 
+    </thead>
+    <tbody>
+      
+    </tbody>
+  </table>
 </div>
 <script type="text/javascript" charset="utf-8">
     let data = <%- JSON.stringify(data)%>
