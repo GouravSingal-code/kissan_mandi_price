@@ -1,0 +1,42 @@
+h1 {
+  color: blue;
+  text-align: center;
+}
+
+.flexbox
+{
+  display: flex;
+}
+
+/* Form */
+
+.form
+{
+  flex-grow: 2;
+}
+
+/* Table */
+
+.table
+{
+  flex-grow: 1;
+  width: 70%;
+}
+
+th
+{
+  text-align: center;
+}
+
+.form-control
+{
+  background-color: #F5F5F5;
+}
+
+.submit
+{
+  background-color: chocolate;
+  width:100%;
+}
+
+
