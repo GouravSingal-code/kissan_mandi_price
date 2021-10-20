@@ -23,13 +23,21 @@ app.get('/', async(req, res)=>{
         for(let index in commodities){
             let state = commodities[index].state
             let district = commodities[index].apmc
+            let commodity = commodities[index].commodity
             // console.log(commodities[index].apmc)
             if(!states.has(state)){
                 states.set(state, new Map())
-            }else if(states.has(state) && !states.get(state).has(district)){
+            }
+            if(states.has(state) && !states.get(state).has(district)){
                 states.get(state).set(district, new Map())
-            }else if(states.has(state) && states.get(state).has(district)){
+            }
+            if(states.has(state) && states.get(state).has(district)){
                 //  method to implement this 
+                states.has(state) && states.get(state).get(district).set(commodity, [])
+                let costArray = states.has(state) && states.get(state).get(district).get(commodity)
+                costArray.push(commodities[index].min_price)
+                costArray.push(commodities[index].modal_price)
+                costArray.push(commodities[index].max_price)
             }
         }
         console.log(states)
