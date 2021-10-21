@@ -34,6 +34,7 @@
   <table class="table table-bordered mr-5 ml-3" >
     <thead>
       <tr>
+        <th scope="col">STATE</th>
         <th scope="col">APMC</th>
         <th scope="col">Commodity</th>
         <th scope="col">Min Price</th>
@@ -57,63 +58,95 @@
     myform.addEventListener('submit' , (e)=>{
       e.preventDefault();
       
-      let state = document.forms['myform'].elements['state'].value;
-      let district = document.forms['myform'].elements['district'].value; 
-      let commodity = document.forms['myform'].elements['commodity'].value;
-
-      // if( data[state] != undefined ){
-         
-      //   if( data[state][district] != undefined ){
-          
-      //     if( data[state][district][commodity] != undefined ){
-
-      //     }else{
-
-      //     }
-
-      //   }else{
-      //     console.log(0);
-      //   }
-
-
-      // }else{
-      //   console.log(0);
-      // }
+      let qstate = document.forms['myform'].elements['state'].value
+      let district = document.forms['myform'].elements['district'].value
+      let commodity = document.forms['myform'].elements['commodity'].value
 
       let objArray = [];
 
-      // console.log(data[state])
-      // console.log(data[state][district][commodity]);
-      if(data[state] === undefined){
-          console.log('No such state exists')
+      if(data[qstate] === undefined){
+          // console.log('No such state exists')
+          for(const state of Object.keys(data)){
+            for(const apmc of Object.keys(data[state])){
+              for(const product of Object.keys(data[state][apmc])){
+                const ans = data[state][apmc][product]
+                let table = document.querySelector("#mytable");
+                tr = document.createElement('tr');
+                table.appendChild(tr); 
+                var td1 = document.createElement('td');
+                td1.textContent = state;
+                tr.appendChild(td1);
+                var td2 = document.createElement('td');
+                td2.textContent = apmc;
+                tr.appendChild(td2);
+                var td3 = document.createElement('td');
+                td3.textContent = product;
+                tr.appendChild(td3);
+                var td4 = document.createElement('td');
+                td4.textContent = ans[0];
+                tr.appendChild(td4);
+                var td5 = document.createElement('td');
+                td5.textContent = ans[1];
+                tr.appendChild(td5);
+                var td6 = document.createElement('td');
+                td6.textContent = ans[2];
+                tr.appendChild(td6);
+              }
+            }
+          }
       }else{
-        if(data[state][district] === undefined){
-          console.log('No such apmc in your area')
+        if(data[qstate][district] === undefined || data[qstate][district][commodity] === undefined){
+          for(const apmc of Object.keys(data[qstate])){
+            if(data[qstate][apmc][commodity] != undefined){
+              console.log(data[qstate][apmc][commodity])
+              const ans = data[qstate][apmc][commodity]
+              let table = document.querySelector("#mytable");
+              tr = document.createElement('tr');
+              table.appendChild(tr); 
+              var td1 = document.createElement('td');
+              td1.textContent = qstate;
+              tr.appendChild(td1)
+              var td2 = document.createElement('td');
+              td2.textContent = apmc;
+              tr.appendChild(td2);
+              var td3 = document.createElement('td');
+              td3.textContent = commodity;
+              tr.appendChild(td3);
+              var td4 = document.createElement('td');
+              td4.textContent = ans[0];
+              tr.appendChild(td4);
+              var td5 = document.createElement('td');
+              td5.textContent = ans[1];
+              tr.appendChild(td5);
+              var td6 = document.createElement('td');
+              td6.textContent = ans[2];
+              tr.appendChild(td6);
+            }
+            
+          }
         }else{
-          if(data[state][district][commodity] === undefined){
-              console.log('No such commodity in any apmc in your area')
-          }else{
-            console.log(data[state][district][commodity]);
-            const ans = data[state][district][commodity]
+            const ans = data[qstate][district][commodity]
             let table = document.querySelector("#mytable");
             tr = document.createElement('tr');
             table.appendChild(tr); 
             var td1 = document.createElement('td');
-            td1.textContent = district;
-            tr.appendChild(td1);
+            td1.textContent = qstate;
+            tr.appendChild(td1)
             var td2 = document.createElement('td');
-            td2.textContent = commodity;
+            td2.textContent = district;
             tr.appendChild(td2);
             var td3 = document.createElement('td');
-            td3.textContent = ans[0];
+            td3.textContent = commodity;
             tr.appendChild(td3);
             var td4 = document.createElement('td');
-            td4.textContent = ans[1];
+            td4.textContent = ans[0];
             tr.appendChild(td4);
             var td5 = document.createElement('td');
-            td5.textContent = ans[2];
+            td5.textContent = ans[1];
             tr.appendChild(td5);
-          }
+            var td6 = document.createElement('td');
+            td6.textContent = ans[2];
+            tr.appendChild(td6);
         }
       }
 
