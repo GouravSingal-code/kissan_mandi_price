@@ -12,15 +12,16 @@ app.use(express.static(publicPath))
 app.set('view engine', 'ejs')
 app.use(bodyParser.urlencoded({ extended: false }))
 
-var states = new Map()
-
+var states = new Map();
+var ans = {};
 
 app.get('/', async(req, res)=>{
-    fs.readFile('commodities.json', (err, data) => {
+    fs.readFile('commodities.json',(err, data) => {
         if(err){
             res.send("an error occured")
         }
         let commodities = JSON.parse(data)
+        // console.log(commodities)
         for(let index in commodities){
             let state = commodities[index].state
             let district = commodities[index].apmc
@@ -40,13 +41,50 @@ app.get('/', async(req, res)=>{
                 costArray.push(commodities[index].modal_price)
                 costArray.push(commodities[index].max_price)
             }
-            
         }
-        res.render('home', {data: commodities})
-        // console.log(states)
+
+        states.forEach((districts,state_name)=>{
+            ans[state_name] = {};
+            districts.forEach((commodities1,district_name)=>{
+                ans[state_name][district_name] = {};
+                commodities1.forEach((list,commodity_name)=>{
+                    ans[state_name][district_name][commodity_name] = list;
+                })                 
+            })
+        })
+        // return states
+        // console.log([...states])
+        res.render('home', {data:JSON.stringify(ans)})
     })
-    // async/await is required here line 38 is running before line 35
-    // console.log("sending the response")
+})
+
+
+app.post('/', (req, res)=>{
+    const state = req.body.state
+    const district = req.body.district
+    const commodity = req.body.commodity
+    
+    let array = [];
+
+    if(states.has(state)){
+        if(states.has(state).has(district)){
+            if(states.has(state).has(district).has(commodity)){
+               array.push(states.has(state).has(district).has(commodity));
+            }
+        }else{
+            states.has(state).forEach((values,keys)=>{
+                if( values.has(commodity)){
+                   array.push(values.has(commodity)); 
+                }
+            })
+        }
+    }else{
+
+    }
+
+    console.log(array);
+    return res.json({"success":true});
+
 })
 
 app.listen(process.env.PORT, ()=>{

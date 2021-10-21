@@ -4,7 +4,7 @@
     <hr>
 </div>
 <div class="flexbox">
-  <form class="ml-5 m-3 mr-4 form">
+  <form class="ml-5 m-3 mr-4 form" id="myform">
     <div class="mb-3">
       <label for="state" class="form-label">State:</label>
       <input type="text" class="form-control" id="state"> 
@@ -29,10 +29,12 @@
       <input type="submit" class="submit" id="sumbit">
     </div>
   </form>
-
-  <table class="table table-bordered mr-5 ml-3">
+   
+  
+  <table class="table table-bordered mr-5 ml-3" >
     <thead>
       <tr>
+        <th scope="col">STATE</th>
         <th scope="col">APMC</th>
         <th scope="col">Commodity</th>
         <th scope="col">Min Price</th>
@@ -40,13 +42,116 @@
         <th scope="col">Modal price</th>
       </tr> 
     </thead>
-    <tbody>
+    <tbody id="mytable" >
       
     </tbody>
   </table>
+  
 </div>
 <script type="text/javascript" charset="utf-8">
-    let data = <%- JSON.stringify(data)%>
-    console.log(data)
+    let data = <%-data%>;
+
+    console.log(data);
+  
+    let myform = document.querySelector("#myform");
+
+    myform.addEventListener('submit' , (e)=>{
+      e.preventDefault();
+      
+      let qstate = document.forms['myform'].elements['state'].value
+      let district = document.forms['myform'].elements['district'].value
+      let commodity = document.forms['myform'].elements['commodity'].value
+
+      let objArray = [];
+
+      if(data[qstate] === undefined){
+          // console.log('No such state exists')
+          for(const state of Object.keys(data)){
+            for(const apmc of Object.keys(data[state])){
+              for(const product of Object.keys(data[state][apmc])){
+                const ans = data[state][apmc][product]
+                let table = document.querySelector("#mytable");
+                tr = document.createElement('tr');
+                table.appendChild(tr); 
+                var td1 = document.createElement('td');
+                td1.textContent = state;
+                tr.appendChild(td1);
+                var td2 = document.createElement('td');
+                td2.textContent = apmc;
+                tr.appendChild(td2);
+                var td3 = document.createElement('td');
+                td3.textContent = product;
+                tr.appendChild(td3);
+                var td4 = document.createElement('td');
+                td4.textContent = ans[0];
+                tr.appendChild(td4);
+                var td5 = document.createElement('td');
+                td5.textContent = ans[1];
+                tr.appendChild(td5);
+                var td6 = document.createElement('td');
+                td6.textContent = ans[2];
+                tr.appendChild(td6);
+              }
+            }
+          }
+      }else{
+        if(data[qstate][district] === undefined || data[qstate][district][commodity] === undefined){
+          for(const apmc of Object.keys(data[qstate])){
+            if(data[qstate][apmc][commodity] != undefined){
+              console.log(data[qstate][apmc][commodity])
+              const ans = data[qstate][apmc][commodity]
+              let table = document.querySelector("#mytable");
+              tr = document.createElement('tr');
+              table.appendChild(tr); 
+              var td1 = document.createElement('td');
+              td1.textContent = qstate;
+              tr.appendChild(td1)
+              var td2 = document.createElement('td');
+              td2.textContent = apmc;
+              tr.appendChild(td2);
+              var td3 = document.createElement('td');
+              td3.textContent = commodity;
+              tr.appendChild(td3);
+              var td4 = document.createElement('td');
+              td4.textContent = ans[0];
+              tr.appendChild(td4);
+              var td5 = document.createElement('td');
+              td5.textContent = ans[1];
+              tr.appendChild(td5);
+              var td6 = document.createElement('td');
+              td6.textContent = ans[2];
+              tr.appendChild(td6);
+            }
+            
+          }
+        }else{
+            const ans = data[qstate][district][commodity]
+            let table = document.querySelector("#mytable");
+            tr = document.createElement('tr');
+            table.appendChild(tr); 
+            var td1 = document.createElement('td');
+            td1.textContent = qstate;
+            tr.appendChild(td1)
+            var td2 = document.createElement('td');
+            td2.textContent = district;
+            tr.appendChild(td2);
+            var td3 = document.createElement('td');
+            td3.textContent = commodity;
+            tr.appendChild(td3);
+            var td4 = document.createElement('td');
+            td4.textContent = ans[0];
+            tr.appendChild(td4);
+            var td5 = document.createElement('td');
+            td5.textContent = ans[1];
+            tr.appendChild(td5);
+            var td6 = document.createElement('td');
+            td6.textContent = ans[2];
+            tr.appendChild(td6);
+        }
+      }
+
+    })
+
+
 </script>
 <% -include('partials/footer')%>
